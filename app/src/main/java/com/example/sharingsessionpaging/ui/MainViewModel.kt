@@ -40,7 +40,8 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
 
 
     private fun getMovieListStream(): Flow<PagingData<Movie>> {
-        return Pager(PagingConfig(20)) {
+        // fix issue #1 in Slide by adding prefetchDistance param for loading in chosen position
+        return Pager(PagingConfig(20, prefetchDistance = 10)) {
             MoviePagingSource(repository)
         }.flow
     }
